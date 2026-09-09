@@ -19,7 +19,7 @@
 
     <!-- Open Graph / Facebook / WhatsApp Meta Tags -->
     <meta property="og:type" content="website">
-    <meta property="og:url" content="https://script.google.com/macros/s/AKfycbyY_k6kWB1CJ1d7zqFpd1HVWNlAHltkj7szbgVxCgF7be7ZJx6q1FNhRJOw8VcdqTQWDQ/exec">
+    <meta property="og:url" content="https://aplikasikuligendong.vercel.app">
     <meta property="og:site_name" content="Kuli Gendong - SDN 4 Rasau Jaya">
     <meta property="og:title" content="KULI GENDONG — Inovasi Literasi Mendongeng SDN 4 Rasau Jaya">
     <meta property="og:description" content="Portal Aplikasi Inovatif Literasi Sekolah SDN 4 Rasau Jaya. Menumbuhkan daya imajinasi, budi pekerti luhur, supervisi berkala, dan evaluasi berbasis web terpadu.">
@@ -47,11 +47,6 @@
     <!-- Embedded SVG Favicon (No Broken Links) -->
     <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%23012764'/%3E%3Cpath d='M8 7h11a3 3 0 0 1 3 3v13a2 2 0 0 0-2-2H8V7z' fill='%236BA1E8'/%3E%3Cpath d='M8 9h10a2 2 0 0 1 2 2v12a2 2 0 0 0-2-2H8V9z' fill='%23FFFFFF'/%3E%3Cpath d='M10 13h7M10 16h5' stroke='%23012764' stroke-width='1.5' stroke-linecap='round'/%3E%3Ccircle cx='23' cy='9' r='3' fill='%23F0AA3F'/%3E%3C/svg%3E">
 
-    <!-- Google Fonts Preconnect -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@500;600;700;800&family=JetBrains+Mono:wght@500;600&display=swap" rel="stylesheet">
-
     <style>
         * {
             margin: 0;
@@ -65,367 +60,34 @@
             height: 100%;
             height: 100dvh;
             overflow: hidden;
-            background-color: #012764;
-            font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-            -webkit-font-smoothing: antialiased;
+            background-color: #F8FAFC;
         }
 
-        /* Container & Iframe */
-        .app-viewport {
-            position: relative;
-            width: 100%;
-            height: 100%;
-            height: 100dvh;
-            overflow: hidden;
-            display: flex;
-            flex-direction: column;
-        }
-
-        .app-frame {
-            position: absolute;
+        #appFrame {
+            position: fixed;
             top: 0;
             left: 0;
-            width: 100%;
-            height: 100%;
+            width: 100vw;
+            height: 100vh;
             height: 100dvh;
             border: 0;
             margin: 0;
             padding: 0;
             display: block;
             background: #F8FAFC;
-            z-index: 10;
-        }
-
-        /* Loading Screen (Shadcn + Glassmorphic Design) */
-        .loader-screen {
-            position: absolute;
-            inset: 0;
-            z-index: 50;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            background: radial-gradient(130% 120% at 50% 0%, #06316F 0%, #012764 60%, #00173D 100%);
-            color: #FFFFFF;
-            transition: opacity 0.45s cubic-bezier(0.16, 1, 0.3, 1), visibility 0.45s ease;
-            padding: 24px;
-        }
-
-        .loader-screen.hidden {
-            opacity: 0;
-            visibility: hidden;
-            pointer-events: none;
-        }
-
-        .loader-card {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            text-align: center;
-            max-width: 440px;
-            width: 100%;
-        }
-
-        /* Animated Icon Halo */
-        .icon-halo-wrap {
-            position: relative;
-            width: 84px;
-            height: 84px;
-            margin-bottom: 24px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .halo-glow {
-            position: absolute;
-            inset: -12px;
-            background: radial-gradient(circle, rgba(61, 130, 221, 0.4) 0%, rgba(9, 79, 183, 0) 70%);
-            border-radius: 50%;
-            animation: pulseGlow 2.4s ease-in-out infinite alternate;
-        }
-
-        .spinner-track {
-            position: absolute;
-            inset: 0;
-            border-radius: 50%;
-            border: 2px solid rgba(220, 235, 250, 0.15);
-            border-top-color: #3D82DD;
-            border-right-color: #6BA1E8;
-            animation: spin 1.2s cubic-bezier(0.5, 0.1, 0.5, 0.9) infinite;
-        }
-
-        .center-logo {
-            width: 58px;
-            height: 58px;
-            background: linear-gradient(135deg, #094FB7 0%, #06316F 100%);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            border-radius: 18px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            box-shadow: 0 8px 24px rgba(1, 39, 100, 0.5);
-        }
-
-        .center-logo svg {
-            width: 30px;
-            height: 30px;
-            fill: #FFFFFF;
-        }
-
-        /* Typography */
-        .brand-badge {
-            display: inline-flex;
-            align-items: center;
-            gap: 6px;
-            padding: 4px 14px;
-            background: rgba(220, 235, 250, 0.12);
-            border: 1px solid rgba(220, 235, 250, 0.2);
-            border-radius: 9999px;
-            font-size: 0.72rem;
-            font-weight: 700;
-            letter-spacing: 0.08em;
-            text-transform: uppercase;
-            color: #A6C9F2;
-            margin-bottom: 12px;
-        }
-
-        .brand-title {
-            font-size: 1.65rem;
-            font-weight: 800;
-            letter-spacing: -0.025em;
-            color: #FFFFFF;
-            margin-bottom: 6px;
-            line-height: 1.2;
-        }
-
-        .brand-school {
-            font-size: 0.88rem;
-            color: #DCE8F7;
-            font-weight: 500;
-            margin-bottom: 24px;
-            line-height: 1.4;
-        }
-
-        /* Progress Bar */
-        .progress-track {
-            width: 100%;
-            max-width: 260px;
-            height: 5px;
-            background: rgba(255, 255, 255, 0.12);
-            border-radius: 9999px;
-            overflow: hidden;
-            position: relative;
-            margin-bottom: 16px;
-        }
-
-        .progress-indicator {
-            position: absolute;
-            top: 0;
-            left: 0;
-            height: 100%;
-            width: 40%;
-            background: linear-gradient(90deg, #3D82DD, #6BA1E8, #A6C9F2);
-            border-radius: 9999px;
-            animation: indeterminate 1.8s ease-in-out infinite;
-        }
-
-        .status-text {
-            font-size: 0.78rem;
-            color: #A6C9F2;
-            font-weight: 500;
-        }
-
-        /* Fallback Box for Slow Network / Browser Restrictions */
-        .fallback-box {
-            margin-top: 28px;
-            display: none;
-            flex-direction: column;
-            align-items: center;
-            gap: 10px;
-            animation: fadeIn 0.4s ease forwards;
-        }
-
-        .fallback-btn {
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            background: rgba(255, 255, 255, 0.15);
-            border: 1px solid rgba(255, 255, 255, 0.28);
-            color: #FFFFFF;
-            padding: 9px 18px;
-            border-radius: 10px;
-            font-size: 0.82rem;
-            font-weight: 600;
-            text-decoration: none;
-            transition: all 0.2s ease;
-            backdrop-filter: blur(8px);
-        }
-
-        .fallback-btn:hover {
-            background: #FFFFFF;
-            color: #012764;
-            transform: translateY(-1px);
-        }
-
-        .fallback-hint {
-            font-size: 0.72rem;
-            color: #9294A9;
-        }
-
-        /* Keyframes */
-        @keyframes spin {
-            to {
-                transform: rotate(360deg);
-            }
-        }
-
-        @keyframes pulseGlow {
-            0% {
-                transform: scale(0.92);
-                opacity: 0.5;
-            }
-
-            100% {
-                transform: scale(1.15);
-                opacity: 0.9;
-            }
-        }
-
-        @keyframes indeterminate {
-            0% {
-                left: -40%;
-                width: 40%;
-            }
-
-            50% {
-                left: 20%;
-                width: 60%;
-            }
-
-            100% {
-                left: 100%;
-                width: 40%;
-            }
-        }
-
-        @keyframes fadeIn {
-            from {
-                opacity: 0;
-                transform: translateY(6px);
-            }
-
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
         }
     </style>
 </head>
 
 <body>
-    <div class="app-viewport">
-        <!-- Modern Loading Screen -->
-        <div class="loader-screen" id="loaderScreen" aria-live="polite">
-            <div class="loader-card">
-                <div class="icon-halo-wrap">
-                    <div class="halo-glow"></div>
-                    <div class="spinner-track"></div>
-                    <div class="center-logo" aria-hidden="true">
-                        <svg viewBox="0 0 24 24">
-                            <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 14.5v-9l6 4.5-6 4.5z" />
-                        </svg>
-                    </div>
-                </div>
-
-                <div class="brand-badge">PORTAL RESMI SEKOLAH</div>
-                <h1 class="brand-title">Kuli Gendong</h1>
-                <p class="brand-school">SDN 4 Rasau Jaya &bull; Kubu Raya, Kalimantan Barat</p>
-
-                <div class="progress-track" role="progressbar" aria-valuemin="0" aria-valuemax="100">
-                    <div class="progress-indicator"></div>
-                </div>
-                <div class="status-text" id="statusText">Menghubungkan ke server portal...</div>
-
-                <!-- Fallback button appears if loading takes > 7 seconds -->
-                <div class="fallback-box" id="fallbackBox">
-                    <a href="https://script.google.com/macros/s/AKfycbyY_k6kWB1CJ1d7zqFpd1HVWNlAHltkj7szbgVxCgF7be7ZJx6q1FNhRJOw8VcdqTQWDQ/exec"
-                        class="fallback-btn" target="_blank" rel="noopener noreferrer">
-                        <span>Buka Langsung di Tab Baru</span>
-                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-                            <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
-                            <polyline points="15 3 21 3 21 9"></polyline>
-                            <line x1="10" y1="14" x2="21" y2="3"></line>
-                        </svg>
-                    </a>
-                    <span class="fallback-hint">Jika koneksi Anda lambat atau frame terblokir browser</span>
-                </div>
-            </div>
-        </div>
-
-        <!-- Fullscreen Google Apps Script Iframe -->
-        <iframe id="mainAppFrame" class="app-frame"
-            src="https://script.google.com/macros/s/AKfycbyY_k6kWB1CJ1d7zqFpd1HVWNlAHltkj7szbgVxCgF7be7ZJx6q1FNhRJOw8VcdqTQWDQ/exec"
-            title="Aplikasi Kuli Gendong SDN 4 Rasau Jaya"
-            allow="clipboard-read; clipboard-write; camera; microphone; geolocation; fullscreen; accelerometer; autoplay"
-            allowfullscreen
-            loading="eager"
-            referrerpolicy="no-referrer-when-downgrade">
-        </iframe>
-    </div>
-
-    <script>
-        (function () {
-            const frame = document.getElementById('mainAppFrame');
-            const loader = document.getElementById('loaderScreen');
-            const statusText = document.getElementById('statusText');
-            const fallbackBox = document.getElementById('fallbackBox');
-
-            let isLoaded = false;
-
-            function hideLoader() {
-                if (isLoaded) return;
-                isLoaded = true;
-                if (statusText) statusText.textContent = 'Memuat antarmuka...';
-                setTimeout(() => {
-                    if (loader) {
-                        loader.classList.add('hidden');
-                    }
-                }, 400);
-            }
-
-            // Trigger when iframe finishes loading
-            if (frame) {
-                frame.addEventListener('load', hideLoader);
-            }
-
-            // Progressive status messaging
-            setTimeout(() => {
-                if (!isLoaded && statusText) {
-                    statusText.textContent = 'Menginisialisasi basis data literasi...';
-                }
-            }, 2500);
-
-            setTimeout(() => {
-                if (!isLoaded && statusText) {
-                    statusText.textContent = 'Menyiapkan modul Kuli Gendong...';
-                }
-            }, 5000);
-
-            // Show fallback button after 7 seconds if still loading
-            setTimeout(() => {
-                if (!isLoaded && fallbackBox) {
-                    fallbackBox.style.display = 'flex';
-                }
-            }, 7000);
-
-            // Safety timeout: automatically hide loader after 12s so user is never permanently blocked
-            setTimeout(() => {
-                if (!isLoaded) {
-                    hideLoader();
-                }
-            }, 12000);
-        })();
-    </script>
+    <iframe id="appFrame"
+        src="https://script.google.com/macros/s/AKfycbyY_k6kWB1CJ1d7zqFpd1HVWNlAHltkj7szbgVxCgF7be7ZJx6q1FNhRJOw8VcdqTQWDQ/exec"
+        title="Aplikasi Kuli Gendong SDN 4 Rasau Jaya"
+        allow="clipboard-read; clipboard-write; camera; microphone; geolocation; fullscreen; accelerometer; autoplay"
+        allowfullscreen
+        loading="eager"
+        referrerpolicy="no-referrer-when-downgrade">
+    </iframe>
 </body>
 
 </html>
